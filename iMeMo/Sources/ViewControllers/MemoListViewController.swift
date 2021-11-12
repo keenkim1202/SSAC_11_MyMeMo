@@ -152,6 +152,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.identifier) as? MemoListTableViewCell else { return UITableViewCell() }
     
     let row = tasks[indexPath.row]
+    let dateInfo = DateFormatter.customFormat.string(from: row.writtenDate)
     
     if indexPath.section == 0 && row.isPinned == true { // 고정된 메모
       cell.titleLabel.text = row.title
@@ -159,7 +160,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     } else {
       let row = tasks[indexPath.row] // 메모
       cell.titleLabel.text = row.title
-      cell.subtitleLabel.text = row.content!
+      cell.subtitleLabel.text = "\(dateInfo)  \(row.content!)"
     }
     return cell
   }

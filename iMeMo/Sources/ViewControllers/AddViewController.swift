@@ -21,12 +21,6 @@ class AddViewController: UIViewController {
   var viewType: ViewType = .add
   var memo: Memo?
   
-  let formatter:  DateFormatter = {
-    let df = DateFormatter()
-    df.dateFormat = "yyyy년 MM월 dd일"
-    return df
-  }()
-  
   // MARK: UI
   @IBOutlet weak var textView: UITextView!
   

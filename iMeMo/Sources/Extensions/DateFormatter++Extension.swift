@@ -8,5 +8,9 @@
 import Foundation
 
 extension DateFormatter {
-  
+  static var customFormat: DateFormatter {
+    let date = DateFormatter()
+    date.dateFormat = "yyyy.MM.dd mm:ss"
+    return date
+  }
 }
