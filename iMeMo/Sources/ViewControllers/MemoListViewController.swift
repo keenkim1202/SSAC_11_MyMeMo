@@ -5,14 +5,11 @@
 //  Created by KEEN on 2021/11/10.
 //
 
-// TODO: 최초 실행 팝업 띄우기
-// TODO: 수정시 viewType을 udpate로 지정하기 (O)
-// TODO: 삭제하고자 하는 cell의 section에따라 row 삭제하기 (O)
-// TODO: realm에 CRUD (O)
-// TODO: Realm에서 검색
-// TODO: 글씨를 쓰지 않을 때 키보드 항상 떠잇을 것. (O)
-// TODO: Pin action 추가하기 (O) -> Pin이 되는 메모 위치가 이상하게 되는 부분 수정할 것.
-// TODO: 검색 기능 추가 - 실시간 검색
+// TODO: Realm에서 검색하기 - 실시간 검색
+// TODO: Pin action 추가하기 -> Pin이 되는 메모 위치가 이상하게 되는 부분 수정할 것.
+// TODO: 오늘, 이번주, 그 외에따라 날짜 정보 표시 다르게 하기
+// TODO: realm 쓰기전에 사용했던 코드 정리하기
+// TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기
 
 import UIKit
 import RealmSwift
@@ -27,9 +24,7 @@ class MemoListViewController: UIViewController {
   var memoCount: Int = 0
   let sectionList: [String] = ["고정된 메모", "메모"]
   let searchController = UISearchController(searchResultsController: nil)
-  var pinnedMemos: [Memo] = []
-  var plainMemos: [Memo] = []
-  
+
   // MARK: UI
   @IBOutlet weak var tableView: UITableView!
   
