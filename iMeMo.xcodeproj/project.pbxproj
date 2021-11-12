@@ -25,6 +25,7 @@
 		1C0F32B9273E1D8800706797 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0F32B8273E1D8800706797 /* Search.storyboard */; };
 		1C0F32BB273E1D9E00706797 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32BA273E1D9E00706797 /* SearchViewController.swift */; };
 		1C0F32BD273E1DF500706797 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32BC273E1DF500706797 /* SearchTableViewCell.swift */; };
+		1C0F32C0273E563F00706797 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C0F32BF273E563F00706797 /* IQKeyboardManagerSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 			files = (
 				1C0F32B7273E1CBC00706797 /* RealmSwift in Frameworks */,
 				1C0F32B5273E1CBC00706797 /* Realm in Frameworks */,
+				1C0F32C0273E563F00706797 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +180,7 @@
 			packageProductDependencies = (
 				1C0F32B4273E1CBC00706797 /* Realm */,
 				1C0F32B6273E1CBC00706797 /* RealmSwift */,
+				1C0F32BF273E563F00706797 /* IQKeyboardManagerSwift */,
 			);
 			productName = iMeMo;
 			productReference = 1C0F326F273B9A9300706797 /* iMeMo.app */;
@@ -210,6 +213,7 @@
 			mainGroup = 1C0F3266273B9A9300706797;
 			packageReferences = (
 				1C0F32B3273E1CBC00706797 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				1C0F32BE273E563F00706797 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 1C0F3270273B9A9300706797 /* Products */;
 			projectDirPath = "";
@@ -484,6 +488,14 @@
 				kind = branch;
 			};
 		};
+		1C0F32BE273E563F00706797 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -496,6 +508,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1C0F32B3273E1CBC00706797 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
+		};
+		1C0F32BF273E563F00706797 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C0F32BE273E563F00706797 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

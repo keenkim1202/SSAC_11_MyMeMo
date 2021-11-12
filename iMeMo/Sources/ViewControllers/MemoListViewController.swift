@@ -5,10 +5,12 @@
 //  Created by KEEN on 2021/11/10.
 //
 
-// TODO: 삭제하고자 하는 cell의 section에따라 row 삭제하기
+// TODO: 최초 실행 팝업 띄우기
+// TODO: 수정시 viewType을 udpate로 지정하기 (O)
+// TODO: 삭제하고자 하는 cell의 section에따라 row 삭제하기 (O)
 // TODO: realm에 CRUD 및 검색
-// TODO: 글씨를 쓰지 않을 때 키보드 dismiss 하기
-// TODO: Pin action 추가하기
+// TODO: 글씨를 쓰지 않을 때 키보드 항상 떠잇을 것.
+// TODO: Pin action 추가하기 (O) -> Pin이 되는 메모 위치가 이상하게 되는 부분 수정할 것.
 // TODO: 검색 기능 추가 - 실시간 검색
 
 import UIKit
@@ -21,6 +23,7 @@ class MemoListViewController: UIViewController {
   var tasks: Results<Memo>!
   
   // MARK: Porperties
+  var memoCount: Int = 0
   let sectionList: [String] = ["고정된 메모", "메모"]
   let searchController = UISearchController(searchResultsController: nil)
   var pinnedMemos: [Memo] = []
@@ -52,6 +55,8 @@ class MemoListViewController: UIViewController {
     super.viewWillAppear(true)
     
     tasks = localRealm.objects(Memo.self)
+    memoCount = tasks.count
+    title = "\(memoCount)개의 메모"
     tableView.reloadData()
   }
   
@@ -73,6 +78,23 @@ class MemoListViewController: UIViewController {
     }
     action.image = UIImage(systemName: "trash")
     action.backgroundColor = .systemRed
+    
+    return action
+  }
+  
+  func pinAction(at indexPath: IndexPath) -> UIContextualAction {
+    let action = UIContextualAction(style: .normal, title: "pin") { action, view, success in
+        print("pinned")
+      let row = self.tasks[indexPath.row]
+      
+      try! self.localRealm.write {
+        row.isPinned.toggle()
+        self.tableView.reloadData()
+      }
+      success(true)
+    }
+    action.image = UIImage(systemName: "pin")
+    action.backgroundColor = UIColor(named: "MainGreenColor")
     
     return action
   }
@@ -129,7 +151,9 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     } else {
       let row = tasks[indexPath.row] // 메모
       cell.titleLabel.text = row.title
-      cell.subtitleLabel.text = row.content
+      cell.subtitleLabel.text = row.content!
+      print("t-", row.title)
+      print("c-",row.content!)
     }
     return cell
   }
@@ -141,28 +165,15 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
   
     let selectedMemo = tasks[indexPath.row]
     vc.memo = selectedMemo
-
-    let nav = UINavigationController(rootViewController: vc)
-    nav.modalPresentationStyle = .fullScreen
-    self.present(nav, animated: true, completion: nil)
+    vc.viewType = .update
+  
+    self.navigationController?.pushViewController(vc, animated: true)
   }
   
-  // MARK: - edit style 설정 -
-//  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//    return true
-//  }
-//
-//  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//  }
-  
+  // MARK: - Swipe Action 설정 -
   // leading에서 스와이프
   func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let pin = UIContextualAction(style: .normal, title: "pin") { (action, view, success: @escaping (Bool) -> Void) in
-        print("pinned")
-        success(true)
-    }
-    pin.image = UIImage(systemName: "pin")
-    pin.backgroundColor = UIColor(named: "MainGreenColor")
+    let pin = pinAction(at: indexPath)
     
     return UISwipeActionsConfiguration(actions:[pin])
   }

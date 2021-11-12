@@ -35,6 +35,7 @@ class AddViewController: UIViewController {
     super.viewDidLoad()
     
     textView.delegate = self
+    textView.becomeFirstResponder()
     configureNAV()
   }
   
@@ -47,7 +48,7 @@ class AddViewController: UIViewController {
     if let memo = memo {
       viewType = .update
       title = "메모 수정"
-      textView.text = memo.title + memo.content!
+      textView.text = "\(memo.title)\n\(memo.content!)"
     } else {
       title = "메모 작성"
     }
@@ -59,33 +60,35 @@ class AddViewController: UIViewController {
   }
   
   @objc func onDone() {
-    
-    let text = textView.text.components(separatedBy: "\n")
-    let title = text[0]
-    let content = text[1...].joined()
-    
-    let task = Memo(title: title, content: content, writtenDate: Date())
-    
-    if viewType == .update {
-      try! localRealm.write {
-        localRealm.create(
-          Memo.self,
-          value: ["_id": memo!._id,
-                  "title": task.title,
-                  "content": task.content ?? "내용 없음",
-                  "writtenDate": Date(),
-                  ],
-          update: .modified
-        )
+    if !textView.text.isEmpty {
+      let text = textView.text.trimmingCharacters(in: .newlines).components(separatedBy: "\n")
+      let title = text.first!
+      let content = String(textView.text.dropFirst(title.count + 1)) // 개행 포함
+      
+      let task = Memo(title: title, content: content, writtenDate: Date())
+      
+      if viewType == .update {
+        try! localRealm.write {
+          localRealm.create(
+            Memo.self,
+            value: ["_id": memo!._id,
+                    "title": task.title,
+                    "content": task.content ?? "추가 텍스트 없음",
+                    "writtenDate": Date(),
+                    ],
+            update: .modified
+          )
+        }
+      } else {
+        try! localRealm.write {
+          localRealm.add(task)
+        }
       }
     } else {
-      try! localRealm.write {
-        localRealm.add(task)
-      }
+      // TODO: 메모의 내용이 비어있으면 메모 삭제하기
     }
     self.navigationController?.popViewController(animated: true)
   }
-  
 }
 
 // MARK: - Extension - TextViewDelegate
