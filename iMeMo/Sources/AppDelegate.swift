@@ -15,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Override point for customization after application launch.
     IQKeyboardManager.shared.enable = true
     IQKeyboardManager.shared.enableAutoToolbar = false
-    IQKeyboardManager.shared.shouldResignOnTouchOutside = false
+    IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+    
     UINavigationBar.appearance().tintColor = UIColor(named: "MainGreenColor")
     return true
   }

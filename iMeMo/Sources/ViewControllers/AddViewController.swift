@@ -35,7 +35,6 @@ class AddViewController: UIViewController {
     super.viewDidLoad()
     
     textView.delegate = self
-    textView.becomeFirstResponder()
     configureNAV()
   }
   
@@ -51,6 +50,7 @@ class AddViewController: UIViewController {
       textView.text = "\(memo.title)\n\(memo.content!)"
     } else {
       title = "메모 작성"
+      textView.becomeFirstResponder()
     }
   }
   
@@ -89,9 +89,4 @@ class AddViewController: UIViewController {
     }
     self.navigationController?.popViewController(animated: true)
   }
-}
-
-// MARK: - Extension - TextViewDelegate
-extension AddViewController: UITextViewDelegate {
-  
 }
