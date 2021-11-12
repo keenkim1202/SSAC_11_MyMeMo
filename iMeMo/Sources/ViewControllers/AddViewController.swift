@@ -33,8 +33,7 @@ class AddViewController: UIViewController {
   // MARK: View Life-Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    textView.delegate = self
+     
     configureNAV()
   }
   
