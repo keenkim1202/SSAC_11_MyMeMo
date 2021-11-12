@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Vwh-Cy-gNf">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Add View Controller-->
+        <scene sceneID="p82-M3-ZCn">
+            <objects>
+                <viewController storyboardIdentifier="addVC" id="Vwh-Cy-gNf" customClass="AddViewController" customModule="iMeMo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ktc-sZ-EgD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AT0-zF-pdH">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="제목1 제목 제목 제목 제목 제목 제목 제목2 제목 제목 제목 제목 제목 제목 제목3 제목 제목 제목 제목 제목 제목 제목4 제목 제목 제목 제목 제목 제목 제목5 제목 제목 제목 제목 제목 제목 제목6 제목 제목 제목 제목" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="35J-p0-Of7">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="이것은 메모 제목이 될 문장임...첫째줄은 메모 제목 나머지는 메모 내용이될 것이다. 메모 내용메모내용메모내용" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Eea-ey-eRr">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="802"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="802" id="QnI-gU-Y5y"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Eea-ey-eRr" secondAttribute="trailing" id="GpM-tC-2kM"/>
+                                    <constraint firstItem="35J-p0-Of7" firstAttribute="leading" secondItem="AT0-zF-pdH" secondAttribute="leading" id="eJD-IK-vw5"/>
+                                    <constraint firstAttribute="bottom" secondItem="Eea-ey-eRr" secondAttribute="bottom" id="fde-2o-for"/>
+                                    <constraint firstItem="Eea-ey-eRr" firstAttribute="leading" secondItem="AT0-zF-pdH" secondAttribute="leading" id="i9C-9P-LWz"/>
+                                    <constraint firstAttribute="trailing" secondItem="35J-p0-Of7" secondAttribute="trailing" id="m94-M2-4m1"/>
+                                    <constraint firstItem="35J-p0-Of7" firstAttribute="top" secondItem="AT0-zF-pdH" secondAttribute="top" id="mV4-T8-SN1"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="a0J-lO-yv5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="AT0-zF-pdH" firstAttribute="top" secondItem="a0J-lO-yv5" secondAttribute="top" id="2d7-fA-DG0"/>
+                            <constraint firstItem="AT0-zF-pdH" firstAttribute="trailing" secondItem="a0J-lO-yv5" secondAttribute="trailing" id="6Qe-oO-gxO"/>
+                            <constraint firstAttribute="bottom" secondItem="AT0-zF-pdH" secondAttribute="bottom" id="XID-fB-Ufu"/>
+                            <constraint firstItem="AT0-zF-pdH" firstAttribute="leading" secondItem="a0J-lO-yv5" secondAttribute="leading" id="YTB-u4-eI6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="Eea-ey-eRr" id="lyc-8v-qZd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AlQ-Pk-dUN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1863.7681159420292" y="97.767857142857139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
