@@ -8,8 +8,9 @@
 // TODO: 최초 실행 팝업 띄우기
 // TODO: 수정시 viewType을 udpate로 지정하기 (O)
 // TODO: 삭제하고자 하는 cell의 section에따라 row 삭제하기 (O)
-// TODO: realm에 CRUD 및 검색
-// TODO: 글씨를 쓰지 않을 때 키보드 항상 떠잇을 것.
+// TODO: realm에 CRUD (O)
+// TODO: Realm에서 검색
+// TODO: 글씨를 쓰지 않을 때 키보드 항상 떠잇을 것. (O)
 // TODO: Pin action 추가하기 (O) -> Pin이 되는 메모 위치가 이상하게 되는 부분 수정할 것.
 // TODO: 검색 기능 추가 - 실시간 검색
 
@@ -35,7 +36,7 @@ class MemoListViewController: UIViewController {
   // MARK: View Life-Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    checkIsFirst()
     configure()
   }
 
@@ -62,6 +63,13 @@ class MemoListViewController: UIViewController {
   
   func checkIsFirst() { // 최초 실행이면 팝업 띄우기
     let isFirst = Storage.isFirstTime()
+    
+    if isFirst == true {
+      let storyBoard = UIStoryboard.init(name: "Popup", bundle: nil)
+      let popupVC = storyBoard.instantiateViewController(withIdentifier: "popupVC")
+      popupVC.modalPresentationStyle = .overCurrentContext
+      present(popupVC, animated: true, completion: nil)
+    }
     print(isFirst)
   }
   
@@ -152,8 +160,6 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
       let row = tasks[indexPath.row] // 메모
       cell.titleLabel.text = row.title
       cell.subtitleLabel.text = row.content!
-      print("t-", row.title)
-      print("c-",row.content!)
     }
     return cell
   }

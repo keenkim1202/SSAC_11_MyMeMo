@@ -26,6 +26,8 @@
 		1C0F32BB273E1D9E00706797 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32BA273E1D9E00706797 /* SearchViewController.swift */; };
 		1C0F32BD273E1DF500706797 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32BC273E1DF500706797 /* SearchTableViewCell.swift */; };
 		1C0F32C0273E563F00706797 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C0F32BF273E563F00706797 /* IQKeyboardManagerSwift */; };
+		1C0F32C4273E5A1100706797 /* Popup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0F32C3273E5A1100706797 /* Popup.storyboard */; };
+		1C0F32C6273E5CE300706797 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32C5273E5CE300706797 /* PopupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		1C0F32B8273E1D8800706797 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		1C0F32BA273E1D9E00706797 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1C0F32BC273E1DF500706797 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		1C0F32C3273E5A1100706797 /* Popup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popup.storyboard; sourceTree = "<group>"; };
+		1C0F32C5273E5CE300706797 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,7 @@
 				1C0F3276273B9A9300706797 /* MemoListViewController.swift */,
 				1C0F329D273CF7E900706797 /* AddViewController.swift */,
 				1C0F32BA273E1D9E00706797 /* SearchViewController.swift */,
+				1C0F32C5273E5CE300706797 /* PopupViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 				1C0F327B273B9A9600706797 /* Assets.xcassets */,
 				1C0F327D273B9A9600706797 /* LaunchScreen.storyboard */,
 				1C0F32B8273E1D8800706797 /* Search.storyboard */,
+				1C0F32C3273E5A1100706797 /* Popup.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -232,6 +238,7 @@
 				1C0F329C273CF7CB00706797 /* Content.storyboard in Resources */,
 				1C0F327F273B9A9600706797 /* LaunchScreen.storyboard in Resources */,
 				1C0F327C273B9A9600706797 /* Assets.xcassets in Resources */,
+				1C0F32C4273E5A1100706797 /* Popup.storyboard in Resources */,
 				1C0F327A273B9A9300706797 /* Main.storyboard in Resources */,
 				1C0F32B9273E1D8800706797 /* Search.storyboard in Resources */,
 			);
@@ -255,6 +262,7 @@
 				1C0F32BD273E1DF500706797 /* SearchTableViewCell.swift in Sources */,
 				1C0F328D273B9E1100706797 /* Storage.swift in Sources */,
 				1C0F32A1273CFDA200706797 /* DateFormatter++Extension.swift in Sources */,
+				1C0F32C6273E5CE300706797 /* PopupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
