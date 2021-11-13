@@ -6,9 +6,7 @@
 //
 
 // TODO: Realm에서 검색하기 - 실시간 검색
-// TODO: Pin action 추가하기 -> Pin이 되는 메모 위치가 이상하게 되는 부분 수정할 것.
 // TODO: 오늘, 이번주, 그 외에 따라 날짜 정보 표시 다르게 하기
-// TODO: realm 쓰기전에 사용했던 코드 정리하기
 // TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기
 
 import UIKit
@@ -23,7 +21,6 @@ class MemoListViewController: UIViewController {
   var memo: Memo? = nil
   var memoCount: Int = 0
   let sectionList: [String] = ["고정된 메모", "메모"]
-  let searchController = UISearchController(searchResultsController: nil)
   
   var pinnedMemos: [Memo] = [] {
     didSet {
@@ -58,6 +55,13 @@ class MemoListViewController: UIViewController {
   // MARK: - Configure -
   func configure() {
     // navigationBar
+    let storyBoard = UIStoryboard.init(name: "Search", bundle: nil)
+    let searchVC = storyBoard.instantiateViewController(withIdentifier: "searchVC") as! SearchViewController
+    let searchController = UISearchController(searchResultsController: searchVC)
+    
+    searchController.searchBar.delegate = self
+    searchController.searchResultsUpdater = self
+    
     self.navigationItem.searchController = searchController
     // tableView
     tableView.delegate = self
@@ -76,7 +80,7 @@ class MemoListViewController: UIViewController {
     
     if isFirst == true {
       let storyBoard = UIStoryboard.init(name: "Popup", bundle: nil)
-      let popupVC = storyBoard.instantiateViewController(withIdentifier: "popupVC")
+      let popupVC = storyBoard.instantiateViewController(withIdentifier: "popupVC") as! PopupViewController
       popupVC.modalPresentationStyle = .overCurrentContext
       present(popupVC, animated: true, completion: nil)
     }
@@ -136,7 +140,7 @@ class MemoListViewController: UIViewController {
 // MARK: - UITableViewDelegate -
 extension MemoListViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return indexPath.section == 0 ? 50 : 70
+    return 70
   }
   
   func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -199,15 +203,35 @@ extension MemoListViewController: UITableViewDataSource {
     
     if indexPath.section == 0  { // 고정된 메모
       let row = pinnedMemos[indexPath.row]
-      let dateInfo = DateFormatter.customFormat.string(from: row.writtenDate)
-      cell.titleLabel.text = row.title
-      cell.subtitleLabel.text = "\(dateInfo)  \(row.content!)"
+      cell.cellConfigure(with: row)
     } else {
       let row = normalMemos[indexPath.row] // 메모
-      let dateInfo = DateFormatter.customFormat.string(from: row.writtenDate)
-      cell.titleLabel.text = row.title
-      cell.subtitleLabel.text = "\(dateInfo)  \(row.content!)"
+      cell.cellConfigure(with: row)
     }
     return cell
   }
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3e61de9f3a2a18794f72f1f361ba5b63ff6d8131
+
+// MARK: - UISearchResultsUpdating
+extension MemoListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+      let searchVC = searchController.searchResultsController as! SearchViewController
+      guard let query = searchController.searchBar.text else { return }
+      searchVC.queryText = query
+    }
+}
+
+extension MemoListViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        reloadData()
+    }
+}
+<<<<<<< HEAD
+>>>>>>> 3e61de9 (tableViewCell - cellConfigure 함수 생성)
+=======
+>>>>>>> 3e61de9f3a2a18794f72f1f361ba5b63ff6d8131
