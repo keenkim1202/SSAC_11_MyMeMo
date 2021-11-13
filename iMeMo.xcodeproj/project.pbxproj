@@ -18,8 +18,7 @@
 		1C0F329C273CF7CB00706797 /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0F329B273CF7CB00706797 /* Content.storyboard */; };
 		1C0F329E273CF7E900706797 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F329D273CF7E900706797 /* AddViewController.swift */; };
 		1C0F32A1273CFDA200706797 /* DateFormatter++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32A0273CFDA200706797 /* DateFormatter++Extension.swift */; };
-		1C0F32AB273E1B7F00706797 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32AA273E1B7F00706797 /* RealmModel.swift */; };
-		1C0F32AD273E1B8500706797 /* RealmQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32AC273E1B8500706797 /* RealmQuery.swift */; };
+		1C0F32AB273E1B7F00706797 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32AA273E1B7F00706797 /* Memo.swift */; };
 		1C0F32B5273E1CBC00706797 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 1C0F32B4273E1CBC00706797 /* Realm */; };
 		1C0F32B7273E1CBC00706797 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C0F32B6273E1CBC00706797 /* RealmSwift */; };
 		1C0F32B9273E1D8800706797 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0F32B8273E1D8800706797 /* Search.storyboard */; };
@@ -28,6 +27,7 @@
 		1C0F32C0273E563F00706797 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1C0F32BF273E563F00706797 /* IQKeyboardManagerSwift */; };
 		1C0F32C4273E5A1100706797 /* Popup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0F32C3273E5A1100706797 /* Popup.storyboard */; };
 		1C0F32C6273E5CE300706797 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32C5273E5CE300706797 /* PopupViewController.swift */; };
+		1C0F32C9273F766E00706797 /* RepositoryServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32C8273F766E00706797 /* RepositoryServiceType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,13 +46,13 @@
 		1C0F329B273CF7CB00706797 /* Content.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
 		1C0F329D273CF7E900706797 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		1C0F32A0273CFDA200706797 /* DateFormatter++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter++Extension.swift"; sourceTree = "<group>"; };
-		1C0F32AA273E1B7F00706797 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
-		1C0F32AC273E1B8500706797 /* RealmQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmQuery.swift; sourceTree = "<group>"; };
+		1C0F32AA273E1B7F00706797 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		1C0F32B8273E1D8800706797 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		1C0F32BA273E1D9E00706797 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1C0F32BC273E1DF500706797 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		1C0F32C3273E5A1100706797 /* Popup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popup.storyboard; sourceTree = "<group>"; };
 		1C0F32C5273E5CE300706797 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
+		1C0F32C8273F766E00706797 /* RepositoryServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryServiceType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +111,7 @@
 			children = (
 				1C0F3272273B9A9300706797 /* AppDelegate.swift */,
 				1C0F3274273B9A9300706797 /* SceneDelegate.swift */,
-				1C0F328C273B9E1100706797 /* Storage.swift */,
+				1C0F32C7273F763F00706797 /* Service */,
 				1C0F32A4273D005D00706797 /* Model */,
 				1C0F329F273CFD9200706797 /* Extensions */,
 				1C0F3286273B9AD600706797 /* ViewControllers */,
@@ -161,10 +161,18 @@
 		1C0F32A4273D005D00706797 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1C0F32AA273E1B7F00706797 /* RealmModel.swift */,
-				1C0F32AC273E1B8500706797 /* RealmQuery.swift */,
+				1C0F32AA273E1B7F00706797 /* Memo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		1C0F32C7273F763F00706797 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				1C0F328C273B9E1100706797 /* Storage.swift */,
+				1C0F32C8273F766E00706797 /* RepositoryServiceType.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,11 +260,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C0F3298273BA60B00706797 /* MemoListTableViewCell.swift in Sources */,
+				1C0F32C9273F766E00706797 /* RepositoryServiceType.swift in Sources */,
 				1C0F3277273B9A9300706797 /* MemoListViewController.swift in Sources */,
 				1C0F32BB273E1D9E00706797 /* SearchViewController.swift in Sources */,
-				1C0F32AD273E1B8500706797 /* RealmQuery.swift in Sources */,
 				1C0F329E273CF7E900706797 /* AddViewController.swift in Sources */,
-				1C0F32AB273E1B7F00706797 /* RealmModel.swift in Sources */,
+				1C0F32AB273E1B7F00706797 /* Memo.swift in Sources */,
 				1C0F3273273B9A9300706797 /* AppDelegate.swift in Sources */,
 				1C0F3275273B9A9300706797 /* SceneDelegate.swift in Sources */,
 				1C0F32BD273E1DF500706797 /* SearchTableViewCell.swift in Sources */,

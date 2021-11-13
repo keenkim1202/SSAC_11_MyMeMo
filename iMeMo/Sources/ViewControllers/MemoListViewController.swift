@@ -7,7 +7,7 @@
 
 // TODO: Realm에서 검색하기 - 실시간 검색
 // TODO: Pin action 추가하기 -> Pin이 되는 메모 위치가 이상하게 되는 부분 수정할 것.
-// TODO: 오늘, 이번주, 그 외에따라 날짜 정보 표시 다르게 하기
+// TODO: 오늘, 이번주, 그 외에 따라 날짜 정보 표시 다르게 하기
 // TODO: realm 쓰기전에 사용했던 코드 정리하기
 // TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기
 
@@ -17,13 +17,25 @@ import RealmSwift
 class MemoListViewController: UIViewController {
 
   // MARK: Realm
-  let localRealm = try! Realm()
-  var tasks: Results<Memo>!
+//  var tasks: Results<Memo>!
   
   // MARK: Porperties
+  var memo: Memo? = nil
   var memoCount: Int = 0
   let sectionList: [String] = ["고정된 메모", "메모"]
   let searchController = UISearchController(searchResultsController: nil)
+  
+  var pinnedMemos: [Memo] = [] {
+    didSet {
+      self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
+    }
+  }
+  var normalMemos: [Memo] = [] {
+    didSet {
+      self.tableView.reloadSections(IndexSet(integer: 1), with: .fade)
+      print("일반 메모 갯수: ", normalMemos.count)
+    }
+  }
 
   // MARK: UI
   @IBOutlet weak var tableView: UITableView!
@@ -34,8 +46,16 @@ class MemoListViewController: UIViewController {
     checkIsFirst()
     configure()
   }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    print(#function)
+    super.viewDidAppear(true)
+    title = "\(RepositoryService.shared.count)개의 메모"
+    reloadData()
+    tableView.reloadData()
+  }
 
-  // MARK: Configure
+  // MARK: - Configure -
   func configure() {
     // navigationBar
     self.navigationItem.searchController = searchController
@@ -43,17 +63,12 @@ class MemoListViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     
-    tasks = localRealm.objects(Memo.self).sorted(byKeyPath: "title", ascending: false)
-    print("Realm Location: ", localRealm.configuration.fileURL ?? "cannot find locaation.")
+    reloadData()
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(true)
-    
-    tasks = localRealm.objects(Memo.self)
-    memoCount = tasks.count
-    title = "\(memoCount)개의 메모"
-    tableView.reloadData()
+  func reloadData() {
+    normalMemos = RepositoryService.shared.fetch(type: .normal)
+    pinnedMemos = RepositoryService.shared.fetch(type: .pinned)
   }
   
   func checkIsFirst() { // 최초 실행이면 팝업 띄우기
@@ -65,18 +80,21 @@ class MemoListViewController: UIViewController {
       popupVC.modalPresentationStyle = .overCurrentContext
       present(popupVC, animated: true, completion: nil)
     }
-    print(isFirst)
   }
   
-  // MARK: Swipe Cell Action
+  // MARK: - Swipe Cell Action -
   func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
-      let row = self.tasks[indexPath.row]
       
-      try! self.localRealm.write {
-        self.localRealm.delete(row)
-        self.tableView.reloadData()
+      if indexPath.section == 0 {
+        let memo = self.pinnedMemos[indexPath.row]
+        RepositoryService.shared.remove(item: memo)
+      } else {
+        let memo = self.normalMemos[indexPath.row]
+        RepositoryService.shared.remove(item: memo)
       }
+      self.reloadData()
+      
       success(true)
     }
     action.image = UIImage(systemName: "trash")
@@ -87,13 +105,16 @@ class MemoListViewController: UIViewController {
   
   func pinAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .normal, title: "pin") { action, view, success in
-        print("pinned")
-      let row = self.tasks[indexPath.row]
       
-      try! self.localRealm.write {
-        row.isPinned.toggle()
-        self.tableView.reloadData()
+      if indexPath.section == 0 {
+        let memo = self.pinnedMemos[indexPath.row]
+        RepositoryService.shared.pin(item: memo)
+      } else {
+        let memo = self.normalMemos[indexPath.row]
+        RepositoryService.shared.pin(item: memo)
       }
+      self.reloadData()
+      
       success(true)
     }
     action.image = UIImage(systemName: "pin")
@@ -109,13 +130,57 @@ class MemoListViewController: UIViewController {
   
     self.navigationController?.pushViewController(vc, animated: true)
   }
-  
 }
 
 // MARK: Extension
-// MARK: UITableViewDelegate & UITableViewDataSource
-extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
-  // MARK: - section -
+// MARK: - UITableViewDelegate -
+extension MemoListViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return indexPath.section == 0 ? 50 : 70
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    let header = view as! UITableViewHeaderFooterView
+    header.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+    header.textLabel?.textColor = .white
+  }
+  
+  // MARK: - cell 선택시 이동 관련
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let contentStoryboard = UIStoryboard.init(name: "Content", bundle: nil)
+    let vc = contentStoryboard.instantiateViewController(withIdentifier: "addVC") as! AddViewController
+  
+    if indexPath.section == 0 {
+      let selectedMemo = pinnedMemos[indexPath.row]
+      vc.memo = selectedMemo
+      vc.viewType = .update
+    } else {
+      let selectedMemo = normalMemos[indexPath.row]
+      vc.memo = selectedMemo
+      vc.viewType = .update
+    }
+    self.navigationController?.pushViewController(vc, animated: true)
+  }
+  
+  // MARK: - Swipe Action 설정
+  // leading에서 스와이프
+  func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let pin = pinAction(at: indexPath)
+    reloadData()
+    return UISwipeActionsConfiguration(actions:[pin])
+  }
+  
+  // trailing에서 스와이프
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let delete = deleteAction(at: indexPath)
+    reloadData()
+    return UISwipeActionsConfiguration(actions:[delete])
+  }
+}
+
+// MARK: - UITableViewDataSource -
+extension MemoListViewController: UITableViewDataSource {
+  // MARK: - section
   func numberOfSections(in tableView: UITableView) -> Int {
     return 2
   }
@@ -124,66 +189,25 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     return sectionList[section]
   }
   
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return indexPath.section == 0 ? 50 : 70
-  }
-
-  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-    let header = view as! UITableViewHeaderFooterView
-    header.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-    header.textLabel?.textColor = .white
-  }
-
-  // MARK: - datasource 관련 -
+  // MARK: - row
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if section == 0 {
-      return tasks.filter("isPinned == true").count
-    } else {
-      return tasks.filter("isPinned == false").count
-    }
+    return section == 0 ? pinnedMemos.count : normalMemos.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.identifier) as? MemoListTableViewCell else { return UITableViewCell() }
     
-    let row = tasks[indexPath.row]
-    let dateInfo = DateFormatter.customFormat.string(from: row.writtenDate)
-    
-    if indexPath.section == 0 && row.isPinned == true { // 고정된 메모
+    if indexPath.section == 0  { // 고정된 메모
+      let row = pinnedMemos[indexPath.row]
+      let dateInfo = DateFormatter.customFormat.string(from: row.writtenDate)
       cell.titleLabel.text = row.title
-      cell.subtitleLabel.text = row.content
+      cell.subtitleLabel.text = "\(dateInfo)  \(row.content!)"
     } else {
-      let row = tasks[indexPath.row] // 메모
+      let row = normalMemos[indexPath.row] // 메모
+      let dateInfo = DateFormatter.customFormat.string(from: row.writtenDate)
       cell.titleLabel.text = row.title
       cell.subtitleLabel.text = "\(dateInfo)  \(row.content!)"
     }
     return cell
-  }
-  
-  // MARK: - cell 선택시 이동 관련 -
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let contentStoryboard = UIStoryboard.init(name: "Content", bundle: nil)
-    let vc = contentStoryboard.instantiateViewController(withIdentifier: "addVC") as! AddViewController
-  
-    let selectedMemo = tasks[indexPath.row]
-    vc.memo = selectedMemo
-    vc.viewType = .update
-  
-    self.navigationController?.pushViewController(vc, animated: true)
-  }
-  
-  // MARK: - Swipe Action 설정 -
-  // leading에서 스와이프
-  func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let pin = pinAction(at: indexPath)
-    
-    return UISwipeActionsConfiguration(actions:[pin])
-  }
-  
-  // trailing에서 스와이프
-  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let delete = deleteAction(at: indexPath)
-    
-    return UISwipeActionsConfiguration(actions:[delete])
   }
 }

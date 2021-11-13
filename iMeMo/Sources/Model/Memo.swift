@@ -13,15 +13,22 @@ class Memo: Object {
   @Persisted var content: String?
   @Persisted var writtenDate: Date
   @Persisted var isPinned: Bool
+  @Persisted var isEnable: Bool
 
   @Persisted(primaryKey: true) var _id: ObjectId
   
-  convenience init(title: String, content: String?, writtenDate: Date) {
+  convenience init(title: String, content: String?) {
     self.init()
     
     self.title = title
     self.content = content
     self.writtenDate = Date()
     self.isPinned = false
+    self.isEnable = true
   }
+}
+
+enum MemoType: String {
+  case pinned = "true"
+  case normal = "false"
 }
