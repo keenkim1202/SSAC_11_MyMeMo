@@ -18,6 +18,9 @@ import RealmSwift
 
 class MemoListViewController: UIViewController {
 
+  // MARK: - typealias
+  typealias CompletionHandler = () -> ()
+  
   // MARK: - Porperties
   var memo: Memo? = nil
   var memoCount: Int = 0
@@ -46,8 +49,8 @@ class MemoListViewController: UIViewController {
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    print(#function)
     super.viewDidAppear(true)
+    
     title = "\(RepositoryService.shared.count)개의 메모"
     reloadData()
     tableView.reloadData()
@@ -87,19 +90,31 @@ class MemoListViewController: UIViewController {
     }
   }
   
+  func showAlert(_ message: String, completion: @escaping CompletionHandler) {
+    let alert = UIAlertController(title: "경고", message: message, preferredStyle: .alert)
+    let no = UIAlertAction(title: "아니오", style: .default, handler: nil)
+    let yes = UIAlertAction(title: "네", style: .destructive) { _ in
+      completion()
+    }
+    alert.addAction(no)
+    alert.addAction(yes)
+    self.present(alert, animated: true, completion: nil)
+  }
+  
   // MARK: - Swipe Cell Action
   func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
       
-      if indexPath.section == 0 {
-        let memo = self.pinnedMemos[indexPath.row]
-        RepositoryService.shared.remove(item: memo)
-      } else {
-        let memo = self.normalMemos[indexPath.row]
-        RepositoryService.shared.remove(item: memo)
+      self.showAlert("정말 삭제하시겠습니까?") {
+        if indexPath.section == 0 {
+          let memo = self.pinnedMemos[indexPath.row]
+          RepositoryService.shared.remove(item: memo)
+        } else {
+          let memo = self.normalMemos[indexPath.row]
+          RepositoryService.shared.remove(item: memo)
+        }
+        self.reloadData()
       }
-      self.reloadData()
-      
       success(true)
     }
     action.image = UIImage(systemName: "trash")
@@ -122,7 +137,7 @@ class MemoListViewController: UIViewController {
       
       success(true)
     }
-    action.image = UIImage(systemName: "pin")
+    action.image = indexPath.section == 0 ? UIImage(systemName: "pin.fill") : UIImage(systemName: "pin")
     action.backgroundColor = UIColor(named: "MainGreenColor")
     
     return action
