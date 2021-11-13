@@ -19,6 +19,7 @@ class AddViewController: UIViewController {
   // MARK: - Properties
   var viewType: ViewType = .add
   var memo: Memo? = nil
+  var isRightBarbuttonsEnable: Bool = false
   
   // MARK: - UI
   @IBOutlet weak var textView: UITextView!
@@ -28,6 +29,7 @@ class AddViewController: UIViewController {
     super.viewDidLoad()
     textView.delegate = self
     configureNAV()
+    configureMemo()
   }
   
   override func viewDidDisappear(_ animated: Bool) {
@@ -38,14 +40,31 @@ class AddViewController: UIViewController {
   // MARK: - Configure
   func configureNAV() {
     self.navigationController?.navigationBar.prefersLargeTitles = false
+    
+    // bar items
     let shareBarButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(onShare))
     let doneBarButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(onDone))
+    
+    if isRightBarbuttonsEnable {
+      shareBarButton.isEnabled = true
+      doneBarButton.isEnabled = true
+      shareBarButton.tintColor = UIColor(named: "MainGreenColor")
+      doneBarButton.tintColor = UIColor(named: "MainGreenColor")
+    } else {
+      shareBarButton.isEnabled = false
+      doneBarButton.isEnabled = false
+      shareBarButton.tintColor = UIColor.darkGray
+      doneBarButton.tintColor = UIColor.darkGray
+    }
+    
+    // title
     navigationItem.rightBarButtonItems = [doneBarButton, shareBarButton]
-    
     title = viewType.rawValue
-    
+  }
+  
+  func configureMemo() {
     if let memo = memo {
-      viewType = .update  
+      viewType = .update
       textView.text = "\(memo.title)\n\(memo.content!)"
     } else {
       textView.becomeFirstResponder()
@@ -96,5 +115,13 @@ class AddViewController: UIViewController {
 // MARK: - Extension
 // MARK: - UITextViewDelegate -
 extension AddViewController: UITextViewDelegate {  
-
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    isRightBarbuttonsEnable = true
+    configureNAV()
+  }
+  
+  func textViewDidEndEditing(_ textView: UITextView) {
+    isRightBarbuttonsEnable = false
+    configureNAV()
+  }
 }
