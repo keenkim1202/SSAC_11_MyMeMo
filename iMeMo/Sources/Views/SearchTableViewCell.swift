@@ -20,5 +20,4 @@ class SearchTableViewCell: UITableViewCell {
     titleLabel.text = memo.title
     subTitleLabel.text = "\(dateInfo) \(content)"
   }
-  
 }

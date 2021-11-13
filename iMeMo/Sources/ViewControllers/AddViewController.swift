@@ -10,20 +10,20 @@ import RealmSwift
 
 class AddViewController: UIViewController {
   
-  // MARK: - Enum -
+  // MARK: - Enum
   enum ViewType: String {
     case add = "메모 추가"
     case update = "메모 수정"
   }
   
-  // MARK: - Properties -
+  // MARK: - Properties
   var viewType: ViewType = .add
   var memo: Memo? = nil
   
-  // MARK: - UI -
+  // MARK: - UI
   @IBOutlet weak var textView: UITextView!
   
-  // MARK: - View Life-Cycle -
+  // MARK: - View Life-Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     textView.delegate = self
@@ -35,7 +35,7 @@ class AddViewController: UIViewController {
     saveData()
   }
   
-  // MARK: - Configure -
+  // MARK: - Configure
   func configureNAV() {
     self.navigationController?.navigationBar.prefersLargeTitles = false
     let shareBarButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(onShare))
@@ -83,7 +83,7 @@ class AddViewController: UIViewController {
     print("save end..")
   }
   
-  // MARK: - Actions -
+  // MARK: - Actions
   @objc func onShare() {
     print("share button tapped.")
   }

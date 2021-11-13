@@ -10,7 +10,7 @@ import RealmSwift
 
 class SearchViewController: UIViewController {
   
-  // MARK: - Properties -
+  // MARK: - Properties
   var queryText: String = "" {
     didSet {
       results = RepositoryService.shared.search(query: queryText)
@@ -23,10 +23,10 @@ class SearchViewController: UIViewController {
     }
   }
   
-  // MARK: - UI -
+  // MARK: - UI
   @IBOutlet weak var searchTableView: UITableView!
   
-  // MARK: - View Life-Cycle -
+  // MARK: - View Life-Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     

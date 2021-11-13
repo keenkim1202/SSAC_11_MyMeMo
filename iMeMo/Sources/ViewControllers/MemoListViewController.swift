@@ -19,10 +19,7 @@ import RealmSwift
 
 class MemoListViewController: UIViewController {
 
-  // MARK: Realm
-//  var tasks: Results<Memo>!
-  
-  // MARK: Porperties
+  // MARK: - Porperties
   var memo: Memo? = nil
   var memoCount: Int = 0
   let sectionList: [String] = ["고정된 메모", "메모"]
@@ -39,10 +36,10 @@ class MemoListViewController: UIViewController {
     }
   }
 
-  // MARK: UI
+  // MARK: - UI
   @IBOutlet weak var tableView: UITableView!
   
-  // MARK: View Life-Cycle
+  // MARK: - View Life-Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     checkIsFirst()
@@ -57,7 +54,7 @@ class MemoListViewController: UIViewController {
     tableView.reloadData()
   }
 
-  // MARK: - Configure -
+  // MARK: - Configure
   func configure() {
     // navigationBar
     let storyBoard = UIStoryboard.init(name: "Search", bundle: nil)
@@ -91,7 +88,7 @@ class MemoListViewController: UIViewController {
     }
   }
   
-  // MARK: - Swipe Cell Action -
+  // MARK: - Swipe Cell Action
   func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
       
@@ -132,7 +129,7 @@ class MemoListViewController: UIViewController {
     return action
   }
   
-  // MARK: Actions
+  // MARK: - Actions
   @IBAction func onWriteButton(_ sender: UIBarButtonItem) {
     let contentStoryboard = UIStoryboard.init(name: "Content", bundle: nil)
     let vc = contentStoryboard.instantiateViewController(withIdentifier: "addVC") as! AddViewController
@@ -141,7 +138,7 @@ class MemoListViewController: UIViewController {
   }
 }
 
-// MARK: Extension
+// MARK: - Extension
 // MARK: - UITableViewDelegate -
 extension MemoListViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -189,7 +186,7 @@ extension MemoListViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource -
 extension MemoListViewController: UITableViewDataSource {
-  // MARK: - section
+  /// section
   func numberOfSections(in tableView: UITableView) -> Int {
     return 2
   }
@@ -198,7 +195,7 @@ extension MemoListViewController: UITableViewDataSource {
     return sectionList[section]
   }
   
-  // MARK: - row
+  /// row
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return section == 0 ? pinnedMemos.count : normalMemos.count
   }
@@ -217,17 +214,19 @@ extension MemoListViewController: UITableViewDataSource {
   }
 }
 
-// MARK: - UISearchResultsUpdating
+// MARK: - Extension
+// MARK: - UISearchResultsUpdating -
 extension MemoListViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-      let searchVC = searchController.searchResultsController as! SearchViewController
-      guard let query = searchController.searchBar.text else { return }
-      searchVC.queryText = query
-    }
+  func updateSearchResults(for searchController: UISearchController) {
+    let searchVC = searchController.searchResultsController as! SearchViewController
+    guard let query = searchController.searchBar.text else { return }
+    searchVC.queryText = query
+  }
 }
 
+// MARK: - UISearchBarDelegate -
 extension MemoListViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        reloadData()
-    }
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    reloadData()
+  }
 }
