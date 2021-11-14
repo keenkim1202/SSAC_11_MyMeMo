@@ -81,19 +81,14 @@ class AddViewController: UIViewController {
     if !textView.text.isEmpty {
       let memoStrings = getMemoStrings(newText: textView.text)
       let newMemo = Memo(title: memoStrings.title, content: memoStrings.content)
-      print("new - \(newMemo)")
+      
         if viewType == .update {
           guard let memo = self.memo else { return }
           
           if (newMemo.title != memo.title) || (newMemo.content != memo.content) {
-            print("updated")
           RepositoryService.shared.update(item: memo, newMemo: newMemo)
-          } else {
-            print("not updated")
           }
-          
         } else {
-          print("added")
           RepositoryService.shared.add(item: newMemo)
         }
     } else {
@@ -112,8 +107,6 @@ class AddViewController: UIViewController {
   }
   
   @objc func onShare() {
-    print("share button tapped.")
-    
     let memo = getMemoStrings(newText: textView.text)
     
     guard
@@ -129,7 +122,6 @@ class AddViewController: UIViewController {
     catch {
         print("공유에 실패하였습니다.", error)
     }
-    
   }
   
   @objc func onDone() {

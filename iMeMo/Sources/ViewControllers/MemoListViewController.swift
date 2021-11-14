@@ -23,6 +23,11 @@ class MemoListViewController: UIViewController {
   var memo: Memo? = nil
   var memoCount: Int = 0
   let sectionList: [String] = ["고정된 메모", "메모"]
+  let numberFormatter: NumberFormatter = {
+    let nf = NumberFormatter()
+    nf.numberStyle = .decimal
+    return nf
+  }()
   
   var pinnedMemos: [Memo] = [] {
     didSet { self.tableView.reloadSections(IndexSet(integer: 0), with: .fade) }
@@ -50,7 +55,9 @@ class MemoListViewController: UIViewController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(true)
     
-    title = "\(RepositoryService.shared.count)개의 메모"
+//    let countWithComma = numberFormatter.string(for: 1000)
+    let countWithComma = numberFormatter.string(for: RepositoryService.shared.count)
+    title = "\(countWithComma!)개의 메모"
     reloadData()
     tableView.reloadData()
   }
