@@ -45,16 +45,14 @@ class AddViewController: UIViewController {
     let shareBarButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(onShare))
     let doneBarButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(onDone))
     
-    if isRightBarbuttonsEnable {
-      shareBarButton.isEnabled = true
-      doneBarButton.isEnabled = true
-      shareBarButton.tintColor = UIColor(named: "MainGreenColor")
-      doneBarButton.tintColor = UIColor(named: "MainGreenColor")
-    } else {
-      shareBarButton.isEnabled = false
-      doneBarButton.isEnabled = false
-      shareBarButton.tintColor = UIColor.darkGray
-      doneBarButton.tintColor = UIColor.darkGray
+    [shareBarButton, doneBarButton].forEach {
+      if isRightBarbuttonsEnable {
+        $0.isEnabled = true
+        $0.tintColor = UIColor(named: "MainGreenColor")
+      } else {
+        $0.isEnabled = false
+        $0.tintColor = UIColor.darkGray
+      }
     }
     
     // title
@@ -80,26 +78,20 @@ class AddViewController: UIViewController {
   }
   
   func saveData() {
-    print("save data...")
-    
     if !textView.text.isEmpty {
       let memoStrings = getMemoStrings(newText: textView.text)
       let newMemo = Memo(title: memoStrings.title, content: memoStrings.content)
       
       if viewType == .update {
         guard let memo = self.memo else { return }
-        print("gonna update")
         RepositoryService.shared.update(item: memo, newMemo: newMemo)
       } else {
-        print("gonna add")
         RepositoryService.shared.add(item: newMemo)
       }
     } else {
-      // TODO: 메모의 내용이 비어있으면 메모 삭제하기
       guard let memo = self.memo else { return }
       RepositoryService.shared.removeEmpty(item: memo)
     }
-    print("save end..")
   }
   
   // MARK: - Actions
