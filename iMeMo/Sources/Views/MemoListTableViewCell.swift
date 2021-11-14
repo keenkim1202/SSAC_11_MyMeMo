@@ -16,7 +16,7 @@ class MemoListTableViewCell: UITableViewCell {
   @IBOutlet weak var dateLabel: UILabel!
   
   func cellConfigure(with memo: Memo) {
-    let dateInfo = DateFormatter.customFormat.string(from: memo.writtenDate)
+    let dateInfo = DateFormatter.setDateFormat(of: memo.writtenDate)
     let content = memo.content ?? "추가 텍스트 없음"
     titleLabel.text = memo.title
     dateLabel.text = dateInfo
