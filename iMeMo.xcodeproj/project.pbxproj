@@ -28,6 +28,7 @@
 		1C0F32C4273E5A1100706797 /* Popup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0F32C3273E5A1100706797 /* Popup.storyboard */; };
 		1C0F32C6273E5CE300706797 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32C5273E5CE300706797 /* PopupViewController.swift */; };
 		1C0F32C9273F766E00706797 /* RepositoryServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32C8273F766E00706797 /* RepositoryServiceType.swift */; };
+		1C0F32CD2740CA2F00706797 /* UIVIewController++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32CC2740CA2F00706797 /* UIVIewController++Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		1C0F32C3273E5A1100706797 /* Popup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Popup.storyboard; sourceTree = "<group>"; };
 		1C0F32C5273E5CE300706797 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		1C0F32C8273F766E00706797 /* RepositoryServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryServiceType.swift; sourceTree = "<group>"; };
+		1C0F32CC2740CA2F00706797 /* UIVIewController++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController++Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				1C0F32A0273CFDA200706797 /* DateFormatter++Extension.swift */,
+				1C0F32CC2740CA2F00706797 /* UIVIewController++Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				1C0F3275273B9A9300706797 /* SceneDelegate.swift in Sources */,
 				1C0F32BD273E1DF500706797 /* SearchTableViewCell.swift in Sources */,
 				1C0F328D273B9E1100706797 /* Storage.swift in Sources */,
+				1C0F32CD2740CA2F00706797 /* UIVIewController++Extension.swift in Sources */,
 				1C0F32A1273CFDA200706797 /* DateFormatter++Extension.swift in Sources */,
 				1C0F32C6273E5CE300706797 /* PopupViewController.swift in Sources */,
 			);

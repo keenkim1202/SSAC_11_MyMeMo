@@ -11,15 +11,13 @@
 // TODO: 검색에서도 cell 클릭 시, 메모를 수정할 수 있도록 하기
 // TODO: 검색에서도 cell 클릭 시, 메모를 삭제/고정 할 수 있도록 하기
 // TODO: 고정 최대 갯수 5개 -> 넘길 시 alert 띄우기
-// TODO: cell 삭제 시, alert 띄우기
+// TODO: Alert문 관련 코드 분리하기
+// TODO: tableView 관련 코드 분리하기
 
 import UIKit
 import RealmSwift
 
 class MemoListViewController: UIViewController {
-
-  // MARK: - typealias
-  typealias CompletionHandler = () -> ()
   
   // MARK: - Porperties
   var memo: Memo? = nil
@@ -90,22 +88,11 @@ class MemoListViewController: UIViewController {
     }
   }
   
-  func showAlert(_ message: String, completion: @escaping CompletionHandler) {
-    let alert = UIAlertController(title: "경고", message: message, preferredStyle: .alert)
-    let no = UIAlertAction(title: "아니오", style: .default, handler: nil)
-    let yes = UIAlertAction(title: "네", style: .destructive) { _ in
-      completion()
-    }
-    alert.addAction(no)
-    alert.addAction(yes)
-    self.present(alert, animated: true, completion: nil)
-  }
-  
   // MARK: - Swipe Cell Action
   func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
       
-      self.showAlert("정말 삭제하시겠습니까?") {
+      self.deleteAlert("정말 삭제하시겠습니까?") {
         if indexPath.section == 0 {
           let memo = self.pinnedMemos[indexPath.row]
           RepositoryService.shared.remove(item: memo)
@@ -130,6 +117,10 @@ class MemoListViewController: UIViewController {
         let memo = self.pinnedMemos[indexPath.row]
         RepositoryService.shared.pin(item: memo)
       } else {
+        guard self.pinnedMemos.count < 5 else {
+          self.maximumPinAlert("더 이상 고정할 수 없습니다.\n고정메모는 최대 5개까지 등록할 수 있습니다.")
+          return
+        }
         let memo = self.normalMemos[indexPath.row]
         RepositoryService.shared.pin(item: memo)
       }
