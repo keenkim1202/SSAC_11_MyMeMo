@@ -166,7 +166,7 @@ extension MemoListViewController: UITableViewDelegate {
   // MARK: - cell 선택시 이동 관련
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let contentStoryboard = UIStoryboard.init(name: "Content", bundle: nil)
-    let vc = contentStoryboard.instantiateViewController(withIdentifier: "addVC") as! AddViewController
+    guard let vc = contentStoryboard.instantiateViewController(withIdentifier: "addVC") as? AddViewController else { return }
   
     if indexPath.section == 0 {
       let selectedMemo = pinnedMemos[indexPath.row]

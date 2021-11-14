@@ -95,8 +95,17 @@ extension SearchViewController: UITableViewDelegate {
     return resultLabel
   }
   
+  // MARK: - cell 선택시 이동 관련
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    print("indexPath - \(indexPath.row)")
+    let contentStoryboard = UIStoryboard.init(name: "Content", bundle: nil)
+    guard let vc = contentStoryboard.instantiateViewController(withIdentifier: "addVC") as? AddViewController else { return }
+    
+    guard let results = results else { return }
+    let selectedMemo = results[indexPath.row]
+    vc.memo = selectedMemo
+    vc.viewType = .update
+    
+    self.navigationController?.pushViewController(vc, animated: true)
   }
   
   // MARK: - Swipe Action 설정
