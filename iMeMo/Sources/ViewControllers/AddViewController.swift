@@ -81,16 +81,21 @@ class AddViewController: UIViewController {
     if !textView.text.isEmpty {
       let memoStrings = getMemoStrings(newText: textView.text)
       let newMemo = Memo(title: memoStrings.title, content: memoStrings.content)
-      guard let memo = self.memo else { return }
-      
-      if (newMemo.title != memo.title) || (newMemo.content != memo.content) {
+      print("new - \(newMemo)")
         if viewType == .update {
+          guard let memo = self.memo else { return }
+          
+          if (newMemo.title != memo.title) || (newMemo.content != memo.content) {
+            print("updated")
           RepositoryService.shared.update(item: memo, newMemo: newMemo)
+          } else {
+            print("not updated")
+          }
+          
         } else {
+          print("added")
           RepositoryService.shared.add(item: newMemo)
         }
-      } else {
-      }
     } else {
       guard let memo = self.memo else { return }
       RepositoryService.shared.removeEmpty(item: memo)
@@ -98,8 +103,33 @@ class AddViewController: UIViewController {
   }
   
   // MARK: - Actions
+  func presentShare(_ path: URL) {
+    let shared = UIActivityViewController(
+      activityItems: [path],
+      applicationActivities: nil)
+    
+    present(shared, animated: true, completion: nil)
+  }
+  
   @objc func onShare() {
     print("share button tapped.")
+    
+    let memo = getMemoStrings(newText: textView.text)
+    
+    guard
+      let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+      let txtFile = memo.content.data(using: .utf8)
+    else { return }
+    
+    do {
+      let txtURL = documentURL.appendingPathComponent("\(memo.title).txt")
+        try txtFile.write(to: txtURL)
+        presentShare(txtURL)
+    }
+    catch {
+        print("공유에 실패하였습니다.", error)
+    }
+    
   }
   
   @objc func onDone() {
