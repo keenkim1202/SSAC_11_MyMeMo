@@ -79,6 +79,7 @@ final class RepositoryService: RepositoryServiceType {
   
   func search(query: String) -> Results<Memo> {
     let search = localRealm.objects(Memo.self)
+      .filter("isEnable == true")
       .filter("title CONTAINS[c] '\(query)' OR content CONTAINS[c] '\(query)'")
     return search.sorted(byKeyPath: "writtenDate", ascending: false)
   }
