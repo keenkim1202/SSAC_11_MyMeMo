@@ -39,6 +39,47 @@ class SearchViewController: UIViewController {
     searchTableView.delegate = self
     searchTableView.dataSource = self
   }
+  
+  // MARK: Swipe Actions
+  func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+    let action = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
+      
+      guard let results = self.results else { return }
+      self.deleteAlert("정말 삭제하시겠습니까?") {
+        
+        let memo = results[indexPath.row]
+        RepositoryService.shared.remove(item: memo)
+        self.searchTableView.reloadData()
+      }
+      success(true)
+    }
+    action.image = UIImage(systemName: "trash")
+    action.backgroundColor = .systemRed
+    
+    return action
+  }
+  
+  func pinAction(at indexPath: IndexPath) -> UIContextualAction {
+    guard let results = self.results else { return UIContextualAction() }
+    
+    let action = UIContextualAction(style: .normal, title: "pin") { action, view, success in
+      let pinnedCount = results.filter("isPinned == true").count
+      guard pinnedCount < 5 else {
+        self.maximumPinAlert("더 이상 고정할 수 없습니다.\n고정메모는 최대 5개까지 등록할 수 있습니다.")
+        return
+      }
+      let memo = results[indexPath.row]
+      RepositoryService.shared.pin(item: memo)
+      
+      success(true)
+    }
+    
+    let isPinned = results[indexPath.row].isPinned
+    action.image = isPinned ? UIImage(systemName: "pin.fill") : UIImage(systemName: "pin")
+    action.backgroundColor = UIColor(named: "MainGreenColor")
+    
+    return action
+  }
 }
 
 // MARK: Extension
@@ -49,6 +90,25 @@ extension SearchViewController: UITableViewDelegate {
     
     resultLabel.text = "\(results.count)개 찾음"
     return resultLabel
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    print("indexPath - \(indexPath.row)")
+  }
+  
+  // MARK: - Swipe Action 설정
+  // leading에서 스와이프
+  func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let pin = pinAction(at: indexPath)
+    searchTableView.reloadData()
+    return UISwipeActionsConfiguration(actions:[pin])
+  }
+  
+  // trailing에서 스와이프
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let delete = deleteAction(at: indexPath)
+    searchTableView.reloadData()
+    return UISwipeActionsConfiguration(actions:[delete])
   }
   
 }

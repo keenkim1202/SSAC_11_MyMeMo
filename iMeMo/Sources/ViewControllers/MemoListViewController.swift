@@ -5,14 +5,15 @@
 //  Created by KEEN on 2021/11/10.
 //
 
-// TODO: 오늘, 이번주, 그 외에 따라 날짜 정보 표시 다르게 하기
-// TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기
-// TODO: 실시간 검색 시, 검색어(queryText) 색상 바꾸기 - 참고해보자(https://zeddios.tistory.com/462)
 // TODO: 검색에서도 cell 클릭 시, 메모를 수정할 수 있도록 하기
 // TODO: 검색에서도 cell 클릭 시, 메모를 삭제/고정 할 수 있도록 하기
-// TODO: 고정 최대 갯수 5개 -> 넘길 시 alert 띄우기
-// TODO: Alert문 관련 코드 분리하기
+
+// TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기
 // TODO: tableView 관련 코드 분리하기
+
+// TODO: 오늘, 이번주, 그 외에 따라 날짜 정보 표시 다르게 하기
+// TODO: 실시간 검색 시, 검색어(queryText) 색상 바꾸기 - 참고해보자(https://zeddios.tistory.com/462)
+
 
 import UIKit
 import RealmSwift
@@ -27,6 +28,7 @@ class MemoListViewController: UIViewController {
   var pinnedMemos: [Memo] = [] {
     didSet {
       self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
+      print("고정 메모 갯수: ", pinnedMemos.count)
     }
   }
   var normalMemos: [Memo] = [] {
@@ -44,6 +46,11 @@ class MemoListViewController: UIViewController {
     super.viewDidLoad()
     checkIsFirst()
     configure()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    tableView.reloadData()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -88,7 +95,7 @@ class MemoListViewController: UIViewController {
     }
   }
   
-  // MARK: - Swipe Cell Action
+  // MARK: Swipe Actions
   func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
       
@@ -109,7 +116,7 @@ class MemoListViewController: UIViewController {
     
     return action
   }
-  
+
   func pinAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .normal, title: "pin") { action, view, success in
       
@@ -232,6 +239,9 @@ extension MemoListViewController: UISearchResultsUpdating {
 
 // MARK: - UISearchBarDelegate -
 extension MemoListViewController: UISearchBarDelegate {
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    self.becomeFirstResponder()
+  }
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     reloadData()
   }
