@@ -12,15 +12,11 @@ class SearchViewController: UIViewController {
   
   // MARK: - Properties
   var queryText: String = "" {
-    didSet {
-      results = RepositoryService.shared.search(query: queryText)
-    }
+    didSet { results = RepositoryService.shared.search(query: queryText) }
   }
 
   var results: Results<Memo>? {
-    didSet {
-      searchTableView.reloadData()
-    }
+    didSet { searchTableView.reloadData() }
   }
   
   // MARK: - UI
