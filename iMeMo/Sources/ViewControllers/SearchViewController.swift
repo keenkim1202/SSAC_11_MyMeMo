@@ -41,6 +41,17 @@ class SearchViewController: UIViewController {
     searchTableView.dataSource = self
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(true)
+    
+    reloadData()
+    searchTableView.reloadData()
+  }
+  
+  func reloadData() {
+    results = RepositoryService.shared.search(query: queryText)
+  }
+  
   // MARK: Swipe Actions
   func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
     let action = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
@@ -106,7 +117,7 @@ extension SearchViewController: UITableViewDelegate {
     vc.memo = selectedMemo
     vc.viewType = .update
     
-    self.navigationController?.pushViewController(vc, animated: true)
+    presentingViewController?.navigationController?.pushViewController(vc, animated: true)
   }
   
   // MARK: - Swipe Action 설정

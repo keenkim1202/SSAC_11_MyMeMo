@@ -68,10 +68,12 @@ class MemoListViewController: UIViewController {
     let storyBoard = UIStoryboard.init(name: "Search", bundle: nil)
     let searchVC = storyBoard.instantiateViewController(withIdentifier: "searchVC") as! SearchViewController
     let searchController = UISearchController(searchResultsController: searchVC)
-    
+
+    searchController.delegate = self
     searchController.searchBar.delegate = self
     searchController.searchResultsUpdater = self
     
+    self.definesPresentationContext = true
     self.navigationItem.searchController = searchController
     // tableView
     tableView.delegate = self
@@ -255,7 +257,7 @@ extension MemoListViewController: UISearchResultsUpdating {
 }
 
 // MARK: - UISearchBarDelegate -
-extension MemoListViewController: UISearchBarDelegate {
+extension MemoListViewController: UISearchBarDelegate, UISearchControllerDelegate {
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     self.becomeFirstResponder()
   }
@@ -263,3 +265,4 @@ extension MemoListViewController: UISearchBarDelegate {
     reloadData()
   }
 }
+
