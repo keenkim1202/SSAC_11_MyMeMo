@@ -8,6 +8,8 @@
 import UIKit
 import RealmSwift
 
+// TODO: 메모 내용을 수정하지 않으면 가장 최신으로 날짜가 바뀌지 않도록 설정하기
+
 class AddViewController: UIViewController {
   
   // MARK: - Enum
@@ -39,7 +41,7 @@ class AddViewController: UIViewController {
   
   // MARK: - Configure
   func configureNAV() {
-    self.navigationController?.navigationBar.prefersLargeTitles = false
+    self.navigationItem.largeTitleDisplayMode = .never
     
     // bar items
     let shareBarButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(onShare))

@@ -5,9 +5,6 @@
 //  Created by KEEN on 2021/11/10.
 //
 
-// TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기 - 참고해서보자(https://hryang.tistory.com/28)
-// TODO: tableView 관련 코드 분리하기
-
 // TODO: 오늘, 이번주, 그 외에 따라 날짜 정보 표시 다르게 하기
 // TODO: 실시간 검색 시, 검색어(queryText) 색상 바꾸기 - 참고해보자(https://zeddios.tistory.com/462)
 
@@ -29,16 +26,10 @@ class MemoListViewController: UIViewController {
   let sectionList: [String] = ["고정된 메모", "메모"]
   
   var pinnedMemos: [Memo] = [] {
-    didSet {
-      self.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
-      print("고정 메모 갯수: ", pinnedMemos.count)
-    }
+    didSet { self.tableView.reloadSections(IndexSet(integer: 0), with: .fade) }
   }
   var normalMemos: [Memo] = [] {
-    didSet {
-      self.tableView.reloadSections(IndexSet(integer: 1), with: .fade)
-      print("일반 메모 갯수: ", normalMemos.count)
-    }
+    didSet { self.tableView.reloadSections(IndexSet(integer: 1), with: .fade) }
   }
 
   // MARK: - UI
