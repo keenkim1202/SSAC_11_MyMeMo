@@ -13,11 +13,13 @@ class MemoListTableViewCell: UITableViewCell {
 
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var subtitleLabel: UILabel!
+  @IBOutlet weak var dateLabel: UILabel!
   
   func cellConfigure(with memo: Memo) {
     let dateInfo = DateFormatter.customFormat.string(from: memo.writtenDate)
     let content = memo.content ?? "추가 텍스트 없음"
     titleLabel.text = memo.title
-    subtitleLabel.text = "\(dateInfo) \(content)"
+    dateLabel.text = dateInfo
+    subtitleLabel.text = content
   }
 }

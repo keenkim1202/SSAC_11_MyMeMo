@@ -13,11 +13,16 @@ class SearchTableViewCell: UITableViewCell {
   
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var subTitleLabel: UILabel!
+  @IBOutlet weak var dateLabel: UILabel!
   
-  func cellConfigure(with memo: Memo) {
+  func cellConfigure(with memo: Memo, query: String) {
     let dateInfo = DateFormatter.customFormat.string(from: memo.writtenDate)
     let content = memo.content ?? "추가 텍스트 없음"
     titleLabel.text = memo.title
-    subTitleLabel.text = "\(dateInfo) \(content)"
+    dateLabel.text = dateInfo
+    subTitleLabel.text = content
+    
+    titleLabel.highlightKeyword(text: query)
+    subTitleLabel.highlightKeyword(text: query)
   }
 }
