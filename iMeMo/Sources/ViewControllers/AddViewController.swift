@@ -48,7 +48,7 @@ class AddViewController: UIViewController {
     [shareBarButton, doneBarButton].forEach {
       if isRightBarbuttonsEnable {
         $0.isEnabled = true
-        $0.tintColor = UIColor(named: "MainGreenColor")
+        $0.tintColor = UIColor.mainColor
       } else {
         $0.isEnabled = false
         $0.tintColor = UIColor.darkGray

@@ -10,6 +10,11 @@ import RealmSwift
 
 class SearchViewController: UIViewController {
   
+  // MARK: - Metric
+  struct Metric {
+    static let fontSize: CGFloat = 20
+  }
+  
   // MARK: - Properties
   var queryText: String = "" {
     didSet { results = RepositoryService.shared.search(query: queryText) }
@@ -24,7 +29,7 @@ class SearchViewController: UIViewController {
   
   let resultLabel: UILabel = {
     let l = UILabel()
-    l.font = UIFont.boldSystemFont(ofSize: 20)
+    l.font = UIFont.boldSystemFont(ofSize: Metric.fontSize)
     return l
   }()
   
@@ -75,7 +80,7 @@ class SearchViewController: UIViewController {
     
     let isPinned = results[indexPath.row].isPinned
     action.image = isPinned ? UIImage(systemName: "pin.fill") : UIImage(systemName: "pin")
-    action.backgroundColor = UIColor(named: "MainGreenColor")
+    action.backgroundColor = UIColor.mainColor
     
     return action
   }
