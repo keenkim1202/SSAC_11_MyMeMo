@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     IQKeyboardManager.shared.enableAutoToolbar = false
     IQKeyboardManager.shared.shouldResignOnTouchOutside = true
     
-    UINavigationBar.appearance().tintColor = UIColor(named: "MainGreenColor")
+    UINavigationBar.appearance().tintColor = UIColor.mainColor
     return true
   }
 
