@@ -60,6 +60,14 @@
   + 문제: swipe가 smooth하게 되지 않고, 하나의 셀을 swipe하고 다른 셀을 swipe하려고 하면, 첫번째 셀의 action버튼이 swipe하기 전의 상태로 돌아가고 두번째 셀은 swipe되지 않았다.
   + 해결: tableView reload를 너무 많이 해줘서 생긴 문제였던 것 같다. action 함수 안에서만 reload 해주는 방식으로 수정하였다.
 
++ 메모리스트 화면과 작성/수정 화면 간의 이동 시 navigationBar title syle 문제
+  + 메모리스트 -> 작성/수정 화면으로 이동 후, 다시 메모리스트 화면으로 돌아오면 기본title style로 돌아왔다. -> addVC의 viewDidLoad() 에서 .preferLargeTitles = false로 주었기 떄문.
+  + 그래서 다시 메모리스트로 돌아올 때를 대비하여 memoListVC의 viewWillAppear()에 .preferLargeTitles = true 로 주었더니 메모리스트의 타이틀이 작성/수정화면으로 이동하는 동안 계속 떠있었다.
+  + 양쪽 모두 .preferLargeTitles 속성에 대한 코드를 지우고, 작성/수정화면에서만 아래의 코드를 작성해주었다.
+```
+    self.navigationController?.navigationBar.prefersLargeTitles = false // 수정 전
+    self.navigationItem.largeTitleDisplayMode = .never // 수정 후
+```
 # 최초 실행 시 팝업창이 뜨는 모습
 <img src="https://user-images.githubusercontent.com/59866819/141436620-0ebf6731-2376-4528-9d1d-beed34ce0eef.mp4" />
 
