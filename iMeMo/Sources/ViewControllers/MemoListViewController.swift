@@ -5,10 +5,7 @@
 //  Created by KEEN on 2021/11/10.
 //
 
-// TODO: tableViewReload를 자주해서 그런가 swipe가 스무스하게 되지 않음 <- 고쳐보기
-// TODO: 검색에서도 cell 클릭 시, 메모를 수정할 수 있도록 하기
-
-// TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기
+// TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기 - 참고해서보자(https://hryang.tistory.com/28)
 // TODO: tableView 관련 코드 분리하기
 
 // TODO: 오늘, 이번주, 그 외에 따라 날짜 정보 표시 다르게 하기
@@ -19,6 +16,12 @@ import UIKit
 import RealmSwift
 
 class MemoListViewController: UIViewController {
+  
+  // MARK: - Metric
+  struct Metric {
+    static let cellHeight: CGFloat = 70
+    static let headerFontSize: CGFloat = 20
+  }
   
   // MARK: - Porperties
   var memo: Memo? = nil
@@ -136,7 +139,7 @@ class MemoListViewController: UIViewController {
       success(true)
     }
     action.image = indexPath.section == 0 ? UIImage(systemName: "pin.fill") : UIImage(systemName: "pin")
-    action.backgroundColor = UIColor(named: "MainGreenColor")
+    action.backgroundColor = UIColor.mainColor
     
     return action
   }
@@ -154,13 +157,15 @@ class MemoListViewController: UIViewController {
 // MARK: - UITableViewDelegate -
 extension MemoListViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 70
+    return Metric.cellHeight
   }
   
   func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
     let header = view as! UITableViewHeaderFooterView
-    header.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-    header.textLabel?.textColor = .white
+    guard let label = header.textLabel else { return }
+    
+    label.font = UIFont.boldSystemFont(ofSize: Metric.headerFontSize)
+    label.textColor = UIColor.headerTextColor
   }
   
   // MARK: - cell 선택시 이동 관련
@@ -203,6 +208,22 @@ extension MemoListViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return sectionList[section]
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    if section == 0 && pinnedMemos.count == 0 {
+      return CGFloat.leastNonzeroMagnitude
+    }
+    else {
+      return tableView.sectionHeaderHeight
+    }
+  }
+  
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    if pinnedMemos.count == 0 {
+      return CGFloat.leastNonzeroMagnitude
+    }
+    return tableView.sectionFooterHeight
   }
   
   /// row
