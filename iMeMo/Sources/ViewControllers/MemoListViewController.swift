@@ -8,7 +8,6 @@
 // TODO: 오늘, 이번주, 그 외에 따라 날짜 정보 표시 다르게 하기
 // TODO: 실시간 검색 시, 검색어(queryText) 색상 바꾸기 - 참고해보자(https://zeddios.tistory.com/462)
 
-
 import UIKit
 import RealmSwift
 
