@@ -135,7 +135,7 @@ extension SearchViewController: UITableViewDataSource {
     guard let results = results else { return UITableViewCell() }
     
     let row = results[indexPath.row]
-    cell.cellConfigure(with: row)
+    cell.cellConfigure(with: row, query: queryText)
     return cell
   }
 }

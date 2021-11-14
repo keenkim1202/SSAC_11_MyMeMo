@@ -30,6 +30,7 @@
 		1C0F32C9273F766E00706797 /* RepositoryServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32C8273F766E00706797 /* RepositoryServiceType.swift */; };
 		1C0F32CD2740CA2F00706797 /* UIVIewController++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32CC2740CA2F00706797 /* UIVIewController++Extension.swift */; };
 		1C0F32D12740EAD600706797 /* UIColor++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32D02740EAD600706797 /* UIColor++Extension.swift */; };
+		1C0F32D32741638600706797 /* UILabel++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0F32D22741638600706797 /* UILabel++Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		1C0F32C8273F766E00706797 /* RepositoryServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryServiceType.swift; sourceTree = "<group>"; };
 		1C0F32CC2740CA2F00706797 /* UIVIewController++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController++Extension.swift"; sourceTree = "<group>"; };
 		1C0F32D02740EAD600706797 /* UIColor++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor++Extension.swift"; sourceTree = "<group>"; };
+		1C0F32D22741638600706797 /* UILabel++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel++Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				1C0F32A0273CFDA200706797 /* DateFormatter++Extension.swift */,
 				1C0F32CC2740CA2F00706797 /* UIVIewController++Extension.swift */,
 				1C0F32D02740EAD600706797 /* UIColor++Extension.swift */,
+				1C0F32D22741638600706797 /* UILabel++Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C0F32D32741638600706797 /* UILabel++Extension.swift in Sources */,
 				1C0F3298273BA60B00706797 /* MemoListTableViewCell.swift in Sources */,
 				1C0F32C9273F766E00706797 /* RepositoryServiceType.swift in Sources */,
 				1C0F3277273B9A9300706797 /* MemoListViewController.swift in Sources */,
