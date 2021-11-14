@@ -51,6 +51,8 @@ class SearchViewController: UIViewController {
         RepositoryService.shared.remove(item: memo)
         self.searchTableView.reloadData()
       }
+      
+      self.searchTableView.reloadData()
       success(true)
     }
     action.image = UIImage(systemName: "trash")
@@ -71,6 +73,7 @@ class SearchViewController: UIViewController {
       let memo = results[indexPath.row]
       RepositoryService.shared.pin(item: memo)
       
+      self.searchTableView.reloadData()
       success(true)
     }
     
@@ -100,14 +103,12 @@ extension SearchViewController: UITableViewDelegate {
   // leading에서 스와이프
   func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let pin = pinAction(at: indexPath)
-    searchTableView.reloadData()
     return UISwipeActionsConfiguration(actions:[pin])
   }
   
   // trailing에서 스와이프
   func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let delete = deleteAction(at: indexPath)
-    searchTableView.reloadData()
     return UISwipeActionsConfiguration(actions:[delete])
   }
   

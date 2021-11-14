@@ -5,8 +5,8 @@
 //  Created by KEEN on 2021/11/10.
 //
 
+// TODO: tableViewReload를 자주해서 그런가 swipe가 스무스하게 되지 않음 <- 고쳐보기
 // TODO: 검색에서도 cell 클릭 시, 메모를 수정할 수 있도록 하기
-// TODO: 검색에서도 cell 클릭 시, 메모를 삭제/고정 할 수 있도록 하기
 
 // TODO: 고정된 메모가 없을 때는 '고정된 메모' 섹션 보이지 않기
 // TODO: tableView 관련 코드 분리하기
@@ -184,14 +184,12 @@ extension MemoListViewController: UITableViewDelegate {
   // leading에서 스와이프
   func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let pin = pinAction(at: indexPath)
-    reloadData()
     return UISwipeActionsConfiguration(actions:[pin])
   }
   
   // trailing에서 스와이프
   func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     let delete = deleteAction(at: indexPath)
-    reloadData()
     return UISwipeActionsConfiguration(actions:[delete])
   }
 }
