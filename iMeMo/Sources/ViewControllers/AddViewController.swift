@@ -8,8 +8,6 @@
 import UIKit
 import RealmSwift
 
-// TODO: 메모 내용을 수정하지 않으면 가장 최신으로 날짜가 바뀌지 않도록 설정하기
-
 class AddViewController: UIViewController {
   
   // MARK: - Enum
@@ -83,12 +81,15 @@ class AddViewController: UIViewController {
     if !textView.text.isEmpty {
       let memoStrings = getMemoStrings(newText: textView.text)
       let newMemo = Memo(title: memoStrings.title, content: memoStrings.content)
+      guard let memo = self.memo else { return }
       
-      if viewType == .update {
-        guard let memo = self.memo else { return }
-        RepositoryService.shared.update(item: memo, newMemo: newMemo)
+      if (newMemo.title != memo.title) || (newMemo.content != memo.content) {
+        if viewType == .update {
+          RepositoryService.shared.update(item: memo, newMemo: newMemo)
+        } else {
+          RepositoryService.shared.add(item: newMemo)
+        }
       } else {
-        RepositoryService.shared.add(item: newMemo)
       }
     } else {
       guard let memo = self.memo else { return }
