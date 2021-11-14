@@ -63,6 +63,8 @@
 + 전체적
   + localization도 하면 좋을 것 같다.
 
++ 검색화면 : 검색하여 메모 내용을 수정하고 나서 다시 검색화면으로 돌아오면 수정한 내용이 검색화면 안에서는 반영이 안되어있음... ㅠ.ㅠ 
+
 ## ✅ 해결
 + leading/trailing Swipe Action : 고정/삭제 swipe하는 과정에서의 문제
   + 문제: swipe가 smooth하게 되지 않고, 하나의 셀을 swipe하고 다른 셀을 swipe하려고 하면, 첫번째 셀의 action버튼이 swipe하기 전의 상태로 돌아가고 두번째 셀은 swipe되지 않았다.
