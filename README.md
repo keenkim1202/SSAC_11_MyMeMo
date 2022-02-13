@@ -1,6 +1,5 @@
 # SSAC_11_MyMeMo
 아이폰 메모앱입니다.
-* 주어진 시간에 가능한 만큼 구현하였으나 완성도가 낮습니다. 기회가 되면 나중에 평가와 관계없이 피드백을 받을 수 있으면 좋겠습니다 🥲🙏🏻
 
 # 구현 기능
 ## 📌 메모리스트 화면
@@ -35,7 +34,7 @@
 - [x] 완료 버튼을 누르거나, 편집 상태가 끝나거나, 백버튼 액션, 제스처를 통해 이전 화면으로 돌아갈 경우 메모가 저장됩니다.
 - [x] 어떠한 텍스트 입력되지 않았을 경우, 메모를 삭제합니다. (이 경우는 삭제 여부를 묻지 않습니다.)
 - [x] 작성된 텍스트에서 사용자가 리턴키를 입력하기 전까지를 제목으로, 나머지를 내용으로 저장합니다.
-- [ ] 우측 상단 공유 버튼을 클릭하면 메모 텍스트가 UIActivityViewController르 통해 공유됩니다.
+- [x] 우측 상단 공유 버튼을 클릭하면 메모 텍스트가 UIActivityViewController르 통해 공유됩니다.
 
 # 추가 구현
 ## 📌 모든 화면
@@ -47,40 +46,52 @@
 
 # 고민!
 ## ☑️ 미해결
-+ 메모리스트화면 : 메모 삭제 혹은 고정메모 갯수 초과 시 alert문을 띄우는 기능관련
+<details>
+<summary> 메모리스트화면 : 메모 삭제 혹은 고정메모 갯수 초과 시 alert문을 띄우는 기능관련 </summary>
+  
   + UIViewController에 extension 해서 작성하였는데, UIAlertController에 extension 하는게 더 나았을지 (더 낫다는 기준은 어디에 두느냐에 따라 다르긴하지만!) 
   + UIAlertController에 처음에 작성하였으나 UIViewController에 한 것 보다 코드가 길어져서, 간결하게 작성하는 것이 더 좋다고 판단하여 UIViewController에 작성하였습니다.
+</details>
 
-+ 작성/수정화면 : 편집 상태가 되면 키보드 올라오고, 우측 상단 공유 버튼과 완료 버튼이 나타납니다.
+<details>
+<summary> 작성/수정화면 : 편집 상태가 되면 키보드 올라오고, 우측 상단 공유 버튼과 완료 버튼이 나타납니다. </summary>
+  
   + 이 부분에서 편집 상태이면 버튼이 활성화 되고 색상이 바뀌도록 하였습니다.
   + UX 관점에서 완료 버튼을 누른 후 memoListVC로 바로 넘어갈지, addVC에 남아있을지에 대해 고민중입니다.
   + (후자가 나을 것 같다고 생각중입니다ㅎㅎ)
+</details>
 
-+ leading/trailing Action 기능
+<details>
+<summary> leading/trailing Action 기능 </summary>
+  
   + tableView reload 말고 insertRow, deleteRow 로 하면 좀 더 cell의 움직임이 부드럽게 할 수 있을 것 같다.
   + 편집모드에서 메모의 내용이 없는데 공유하려 할 때 alert문 혹은 공유 버튼 isEnable = false하면 좋을 것 같다.
+</details>
 
-+ 전체적
-  + localization도 하면 좋을 것 같다.
+  + 전체적
+    + localization도 하면 좋을 것 같다.
 
-+ 검색화면 : 검색하여 메모 내용을 수정하고 나서 다시 검색화면으로 돌아오면 수정한 내용이 검색화면 안에서는 반영이 안되어있음... ㅠ.ㅠ 
+  + 검색화면 : 검색하여 메모 내용을 수정하고 나서 다시 검색화면으로 돌아오면 수정한 내용이 검색화면 안에서는 반영이 안되어있음.
 
 ## ✅ 해결
-+ leading/trailing Swipe Action : 고정/삭제 swipe하는 과정에서의 문제
+<details>
+<summary> leading/trailing Swipe Action : 고정/삭제 swipe하는 과정에서의 문제 </summary>
+  
   + 문제: swipe가 smooth하게 되지 않고, 하나의 셀을 swipe하고 다른 셀을 swipe하려고 하면, 첫번째 셀의 action버튼이 swipe하기 전의 상태로 돌아가고 두번째 셀은 swipe되지 않았다.
   + 해결: tableView reload를 너무 많이 해줘서 생긴 문제였던 것 같다. action 함수 안에서만 reload 해주는 방식으로 수정하였다.
+</details>
 
-+ 메모리스트 화면과 작성/수정 화면 간의 이동 시 navigationBar title syle 문제
-  + 메모리스트 -> 작성/수정 화면으로 이동 후, 다시 메모리스트 화면으로 돌아오면 기본title style로 돌아왔다. -> addVC의 viewDidLoad() 에서 .preferLargeTitles = false로 주었기 떄문.
+<details>
+<summary> 메모리스트 화면과 작성/수정 화면 간의 이동 시 navigationBar title syle 문제 </summary>
+  
+  + 메모리스트 -> 작성/수정 화면으로 이동 후, 다시 메모리스트 화면으로 돌아오면 기본title style로 돌아왔다. -> addVC의 viewDidLoad() 에서 .preferLargeTitles = false로 주었기 때문이다.
   + 그래서 다시 메모리스트로 돌아올 때를 대비하여 memoListVC의 viewWillAppear()에 .preferLargeTitles = true 로 주었더니 메모리스트의 타이틀이 작성/수정화면으로 이동하는 동안 계속 떠있었다.
   + 양쪽 모두 .preferLargeTitles 속성에 대한 코드를 지우고, 작성/수정화면에서만 아래의 코드를 작성해주었다.
 ```
     self.navigationController?.navigationBar.prefersLargeTitles = false // 수정 전
     self.navigationItem.largeTitleDisplayMode = .never // 수정 후
 ```
-# 최초 실행 시 팝업창이 뜨는 모습
-<img src="https://user-images.githubusercontent.com/59866819/141436620-0ebf6731-2376-4528-9d1d-beed34ce0eef.mp4" />
-
+</details>
+  
 # 실행 영상
-* 미완성
-
+<img src="https://user-images.githubusercontent.com/59866819/153759253-d2ccf1cd-11f8-401f-91a5-69d72285660d.gif" />
