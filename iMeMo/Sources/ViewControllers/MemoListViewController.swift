@@ -11,7 +11,7 @@
 import UIKit
 import RealmSwift
 
-class MemoListViewController: UIViewController {
+class MemoListViewController: UIViewController, UISearchControllerDelegate {
   
   // MARK: - Metric
   struct Metric {
@@ -49,7 +49,7 @@ class MemoListViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    tableView.reloadData()
+//    tableView.reloadData()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -257,10 +257,11 @@ extension MemoListViewController: UISearchResultsUpdating {
 }
 
 // MARK: - UISearchBarDelegate -
-extension MemoListViewController: UISearchBarDelegate, UISearchControllerDelegate {
+extension MemoListViewController: UISearchBarDelegate {
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
     self.becomeFirstResponder()
   }
+  
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     reloadData()
   }

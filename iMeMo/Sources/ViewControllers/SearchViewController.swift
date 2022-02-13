@@ -41,14 +41,16 @@ class SearchViewController: UIViewController {
     searchTableView.dataSource = self
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(true)
-    
-    reloadData()
-    searchTableView.reloadData()
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    print(#function)
+    searchData()
+    print("q- ", queryText)
+    print("r- ",results!)
+//    searchTableView.reloadData()
   }
   
-  func reloadData() {
+  func searchData() {
     results = RepositoryService.shared.search(query: queryText)
   }
   
